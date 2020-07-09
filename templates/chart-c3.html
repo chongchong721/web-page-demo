@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="/static/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+<!--    <link rel="stylesheet" href="/static/assets/vendor/charts/c3charts/c3.css">-->
+    <link rel="stylesheet" href="/static/css/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="/static/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/assets/vendor/bootstrap/css/bootstrap.min.css"></script>
+    <script src="/static/bootstrap-table.min.js"></script>
+    <script src="/static/echarts.min.js"></script>
+    <script src="/static/chart.js"></script>
+<!--    <script src="/static/table.js"></script>-->
+    <title>图书大数据分析</title>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+
+        <div class="dashboard-header">
+            <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                <a class="navbar-brand" href="/page/index">图书数据分析</a>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <p class="crew_mem" >
+                        爬虫：贺天琦 李蕙蓉<br>
+                        数据分析：赖志超 熊友<br>
+                        可视化：陈睿莹 孟元
+                        <style>
+                            p.crew_mem
+                            {
+                                position:fixed;
+                                right:5px;
+                                text-align: right;
+                            }
+                        </style>
+                    </p>
+                </div>
+            </nav>
+        </div>
+        <div class="nav-left-sidebar sidebar-dark">
+            <div class="menu-list">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-divider">
+                                Menu
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#no1" ><i class="fa fa-fw fa-chart-pie"></i>各类别读者数统计</a>
+                            </li>
+                             <li class="nav-item ">
+                                <a class="nav-link" href="#no2" ><i class="fa fa-fw fa-chart-pie"></i>最受欢迎作家</a>
+                            </li>
+                             <li class="nav-item ">
+                                <a class="nav-link" href="#no3" ><i class="fa fa-fw fa-chart-bar"></i>各类别占比</a>
+                            </li>
+                             <li class="nav-item ">
+                                <a class="nav-link" href="#no4" ><i class="fa fa-fw fa-chart-bar"></i>类别评分排行</a>
+                            </li>
+                             <li class="nav-item ">
+                                <a class="nav-link" href="#no5" ><i class="fa fa-fw fa-chart-line"></i>各个评分书籍数</a>
+                            </li>
+                             <li class="nav-item ">
+                                <a class="nav-link" href="#no6" ><i class="fa fa-fw fa-chart-bar"></i>出版社出版数</a>
+                            </li>
+                             <li class="nav-item ">
+                                <a class="nav-link" href="#no7" ><i class="fa fa-fw fa-table"></i>热门小说排行榜</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+<!--                            <h2 class="pageheader-title">小说大数据分析 </h2>-->
+                            <img id="weather" src="/static/img/weather1.png" alt="" style="display: inline;right: 50px">
+                            <h3 style="display: inline">&nbsp&nbsp&nbsp</h3>
+                            <h3 style="display:inline">当前时间：</h3>
+                            <h3 id="time" style="display:inline">
+                                <script type="text/javascript">document.getElementById('time').innerHTML = new Date().toLocaleString();
+                                    setInterval("document.getElementById('time').innerHTML=new Date().toLocaleString();", 1000);
+                                </script>
+                            </h3>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card" >
+                            <a class="target-fix" id="no1"></a>
+                            <h5 class="card-header" id="card1"><p class="font-hei"><b>类别读者数(滚轮缩放)</b></p></h5>
+                            <div class="card-body">
+                                <div id="echart_reader_count" style="width:100%;height: 324px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <a class="target-fix" id="no2"></a>
+                            <h5 class="card-header"  id="card2"><p class="font-hei"><b>最受欢迎作家</b></p></h5>
+                            <div class="card-body">
+                                <div id="echart_fav_author" style="width:100%;height: 324px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <a class="target-fix" id="no3"></a>
+                            <h5 class="card-header" id="card3"><p class="font-hei"><b>各类别小说占比</b></p></h5>
+                            <div class="card-body">
+                                <div id="echart_type_count" style="width:100%;height: 324px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <a class="target-fix" id="no4"></a>
+                            <h5 class="card-header" id="card4"><p class="font-hei"><b>类别评分排行</b></p></h5>
+                            <div class="card-body">
+                                <div id="echart_rank" style="width:100%;height: 376px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <a class="target-fix" id="no5"></a>
+                            <h5 class="card-header" id="card5"><p class="font-hei"><b>各评分作品数</b></p></h5>
+                            <div class="card-body">
+                                <div id="echart_get_num_by_rank" style="width:100%;height: 376px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <a class="target-fix" id="no6"></a>
+                            <h5 class="card-header" id="card6"><p class="font-hei"><b>出版社排行</b></p></h5>
+                            <div class="card-body">
+                                <div id="echart_press" style="width:100%;height: 376px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <a class="target-fix" id="no7"></a>
+                            <h5 class="card-header" id="card7"><p class="font-hei"><b>热门小说TOP10</b></p></h5>
+                            <div class="card-body">
+                                <table class="table-hover" id="table_top" data-toggle="table" data-detail-view="true" data-detail-formatter="detailFormatter">
+                                </table>
+                                <script>
+                                    var table_top = {
+                                        get_data: function () {
+                                            $.ajax({
+                                                url: "/data/get_top_reader_num",
+                                                type: "GET",
+                                                dataType: "json",
+                                                success: function (res) {
+                                                    var $table = $('#table_top');
+                                                    console.log("%s", JSON.stringify(res));
+                                                    table_top.buildTable($table, 3, 10, res);
+                                                }
+                                            });
+                                        },
+                                        buildTable: function ($el, cells, rows, res) {
+
+                                            var columns = [
+                                                {
+                                                    field: 'image', title: '封面',
+                                                    formatter: function (value, row, index) {
+                                                        return "<img style='width:100px;height:144px' src='/static/img/" + value + ".png' alt=''>"
+                                                    }
+                                                },
+                                                {field: 'book', title: '书名'},
+                                                {field: 'author', title: '作者'},
+                                                {field: 'type', title: '类别'},
+                                                {field: 'rank', title: '评分'},
+                                                {field: 'num', title: '人气值'},
+                                                {field: 'intro', title: '简介', visible:false}
+                                            ];
+                                            var data = res;
+                                            $el.bootstrapTable('destroy').bootstrapTable({
+                                                columns: columns,
+                                                data: data
+                                            })
+                                        }
+
+                                    }
+                                    table_top.get_data();
+                                    function detailFormatter(index,row) {
+                                        return row.intro;
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            大数据十八组作品&nbsp&nbsp&nbsp指导老师：钟孟玲
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a href="">查看前端项目源码</a>
+                                <a href="mailto:fbzq125689@gmail.com">联系我们</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+<!--    <script src="/static/assets/vendor/jquery/jquery-3.3.1.min.js"></script>-->
+<!--    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>-->
+<!--    <script src="/static/assets/vendor/slimscroll/jquery.slimscroll.js"></script>-->
+<!--    <script src="/static/assets/vendor/charts/c3charts/c3.min.js"></script>-->
+<!--    <script src="/static/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>-->
+<!--    <script src="/static/assets/vendor/charts/c3charts/C3chartjs.js"></script>-->
+<!--    <script src="/static/assets/libs/js/main-js.js"></script>-->
+</body>
+ 
+</html>
