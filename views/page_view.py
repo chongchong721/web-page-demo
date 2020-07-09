@@ -14,5 +14,5 @@ page_provider = Blueprint('page_provider', __name__)
 
 @page_provider.route("/index", endpoint="index")
 def index():
-    return render_template("chart-c3.html")
+    return render_template("chart-index.html")
 
