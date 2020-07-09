@@ -20,6 +20,7 @@
     <script src="/static/bootstrap-table.min.js"></script>
     <script src="/static/echarts.min.js"></script>
     <script src="/static/chart.js"></script>
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <!--    <script src="/static/table.js"></script>-->
     <title>图书大数据分析</title>
 </head>
@@ -53,7 +54,7 @@
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                    <a class="d-xl-none d-lg-none" href="#navbarNav">Menu</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -217,10 +218,13 @@
                                         }
 
                                     }
-                                    table_top.get_data();
+
                                     function detailFormatter(index,row) {
                                         return row.intro;
                                     }
+                                    $(function(){
+                                        table_top.get_data();
+                                    })
                                 </script>
                             </div>
                         </div>
